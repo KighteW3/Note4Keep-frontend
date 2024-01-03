@@ -1,0 +1,279 @@
+@use "./App.scss";
+
+$displayMobile: flex;
+$nav-bar-mobile-list-gap: 15px;
+$nav-bar-mobile-list-padding: 15px;
+$buttonActive: blue;
+$buttonColorActive: red;
+
+.nav-bar-desktop {
+  box-sizing: border-box;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  position: initial;
+  z-index: 3000;
+
+  &__list {
+    width: 100%;
+    height: auto;
+    background-color: mediumaquamarine;
+    padding: 15px 10px;
+    box-sizing: border-box;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+
+    li {
+      height: auto;
+      width: auto;
+      text-decoration: none;
+      list-style: none;
+      display: flex;
+      font-size: 18px;
+
+      @mixin nav-bar-link {
+        &:hover {
+          opacity: 0.8;
+        }
+
+        width: 100%;
+        height: 100%;
+        color: black;
+        background-color: aliceblue;
+        border-radius: App.$border-radius;
+        text-decoration: none;
+        padding: 6px 10px;
+        height: 30px;
+
+        svg {
+          width: 40px;
+          height: 100%;
+        }
+      }
+
+      div {
+        width: auto;
+        height: auto;
+        display: flex;
+
+        a {
+          @include nav-bar-link;
+        }
+      }
+
+      @mixin separator-divs() {
+        content: "";
+        position: absolute;
+        height: 80%;
+        top: 10%;
+      }
+
+      div.nav-bar-login-button {
+        position: relative;
+
+        a {
+          border-radius: App.$border-radius 0 0 App.$border-radius;
+        }
+
+        &::after {
+          @include separator-divs;
+          border-right: 0.2px solid #ccc;
+          right: 0;
+        }
+      }
+
+      div.nav-bar-register-button {
+        position: relative;
+
+        a {
+          border-radius: 0 App.$border-radius App.$border-radius 0;
+        }
+
+        &::after {
+          @include separator-divs;
+          border-left: 0.2px solid #ccc;
+          left: 0;
+        }
+      }
+
+      a {
+        transition: 0.5s;
+        @include nav-bar-link;
+      }
+
+      a.is-active {
+        &:hover {
+          opacity: 1;
+        }
+
+        background-color: $buttonActive;
+        color: $buttonColorActive;
+        pointer-events: none;
+        transition: 0.5s;
+      }
+    }
+  }
+
+  &__toggler {
+    height: auto;
+    width: 100%;
+    background-color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px;
+    box-sizing: border-box;
+    cursor: pointer;
+
+    @keyframes rotate {
+      0% {
+        transform: rotate(0);
+      }
+      100% {
+        transform: rotate(180deg);
+      }
+    }
+
+    @keyframes rotateReverse {
+      0% {
+        transform: rotate(180deg);
+      }
+      100% {
+        transform: rotate(0);
+      }
+    }
+
+    svg {
+      height: 20px;
+    }
+  }
+}
+
+.nav-bar-desktop-fixed {
+  @extend .nav-bar-desktop;
+  position: sticky;
+  top: 0;
+  left: 0;
+}
+
+.nav-bar-mobile {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: 0;
+  box-sizing: border-box;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+
+  &__menu {
+    width: 100%;
+    min-height: 50px;
+    background-color: aqua;
+
+    &__list {
+      width: 100%;
+      height: 100%;
+      padding: $nav-bar-mobile-list-padding;
+      margin: 0;
+      box-sizing: border-box;
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: $nav-bar-mobile-list-gap;
+
+      li {
+        text-decoration: none;
+        width: 100px;
+        height: 40px;
+        background-color: white;
+        border-radius: 20px;
+
+        a {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          transition: 0.5s;
+          border-radius: 20px;
+
+          svg {
+            transition: 0.5s;
+            width: 80%;
+            height: 80%;
+            color: black;
+          }
+        }
+
+        a.is-active {
+          &:hover {
+            opacity: 1;
+          }
+
+          background-color: $buttonActive;
+          color: $buttonColorActive;
+          pointer-events: none;
+          transition: 0.5s;
+
+          svg {
+            transition: 0.5s;
+            width: 80%;
+            height: 80%;
+            color: $buttonColorActive;
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes hideNavBar {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(0, 100%);
+  }
+}
+
+@keyframes showNavBar {
+  0% {
+    transform: translate(0, 100%);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+.nav-bar-mobile-hide {
+  @extend .nav-bar-mobile;
+  animation-name: hideNavBar;
+  animation-duration: 0.4s;
+  animation-fill-mode: forwards;
+}
+
+.nav-bar-mobile-show {
+  @extend .nav-bar-mobile;
+  animation-name: showNavBar;
+  animation-duration: 0.4s;
+  animation-fill-mode: forwards;
+}
+
+@media only screen and (max-width: 720px) {
+  .nav-bar-desktop {
+    display: none;
+  }
+  .nav-bar-mobile {
+    display: $displayMobile;
+  }
+}

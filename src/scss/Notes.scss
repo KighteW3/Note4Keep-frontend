@@ -1,0 +1,24 @@
+@use "./App.scss";
+
+.notes-main {
+  width: 100%;
+  height: auto;
+}
+
+.notes-main__notes-container {
+  width: 100%;
+  height: auto;
+  padding: 40px;
+  box-sizing: border-box;
+
+  &__content {
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+}

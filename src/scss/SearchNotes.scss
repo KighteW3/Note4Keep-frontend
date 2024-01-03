@@ -1,0 +1,20 @@
+@use "./Notes.scss";
+
+.search-notes {
+  width: 100%;
+}
+
+.search-notes__content {
+  @extend .notes-main__notes-container;
+
+  &__container {
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+}

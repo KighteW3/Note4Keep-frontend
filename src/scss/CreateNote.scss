@@ -1,0 +1,105 @@
+@use "./App.scss";
+
+.create-note-container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.create-note {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: brown;
+  border-radius: App.$border-radius;
+  opacity: 0;
+  animation-name: dialogTransition;
+  animation-fill-mode: forwards;
+  animation-duration: 0.5s;
+
+  &__content {
+    width: 90%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: App.$border-radius;
+    padding: 15px;
+    border: 2px solid #555;
+    margin: 25px 0;
+    box-sizing: border-box;
+
+    &__structure {
+      width: auto;
+      height: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 30px;
+
+      &__headers {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin: 0;
+
+        &__items {
+          height: 40px;
+          max-width: 70dvw;
+          padding: none;
+          margin: none;
+          box-sizing: border-box;
+        }
+
+        input {
+          width: 300px;
+          padding: 10px;
+        }
+      }
+
+      &__body {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        pre {
+          box-sizing: border-box;
+          width: inherit;
+          height: fit-content;
+          max-width: 70dvw;
+          min-height: 200px;
+          max-height: 500px;
+          margin: none;
+          padding: none;
+
+          @media only screen and (max-width: 720px) {
+            max-height: 50dvh;
+          }
+
+          textarea {
+            box-sizing: border-box;
+            width: inherit;
+            height: fit-content;
+            max-width: 70dvw;
+            min-height: 200px;
+            max-height: 500px;
+            margin: none;
+            padding: none;
+
+            @media only screen and (max-width: 720px) {
+              max-height: 50dvh;
+            }
+          }
+        }
+      }
+    }
+  }
+}

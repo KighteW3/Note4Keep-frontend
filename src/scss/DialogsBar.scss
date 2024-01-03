@@ -1,0 +1,43 @@
+@use "./App.scss";
+
+.dialogs-bar {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-color: #fff4;
+  padding: 0 20px;
+  box-sizing: border-box;
+  border-radius: App.$border-radius App.$border-radius 0 0;
+
+  &__title {
+    font-size: 20px;
+  }
+
+  &__exit {
+    &:hover {
+      cursor: pointer;
+    }
+
+    position: absolute;
+    width: 37px;
+    height: 37px;
+    right: 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: App.$border-radius;
+    background-color: beige;
+    border: none;
+    outline: none;
+    margin: 0 20px;
+
+    svg {
+      height: 80%;
+      width: 80%;
+    }
+  }
+}
