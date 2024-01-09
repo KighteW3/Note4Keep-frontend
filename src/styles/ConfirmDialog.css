@@ -1,0 +1,177 @@
+body {
+  background-color: #666;
+}
+
+main {
+  width: 100%;
+  height: 100%;
+}
+
+.modal-display {
+  width: 100%;
+  height: 100dvh;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1900;
+  background-color: rgba(0, 0, 0, 0.6666666667);
+}
+.modal-display__box {
+  width: 90%;
+  height: auto;
+  z-index: 2000;
+}
+
+@keyframes dialogTransition {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.create-note-container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.create-note {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: brown;
+  border-radius: 10px;
+  opacity: 0;
+  animation-name: dialogTransition;
+  animation-fill-mode: forwards;
+  animation-duration: 0.5s;
+}
+.create-note__content {
+  width: 90%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  padding: 15px;
+  border: 2px solid #555;
+  margin: 25px 0;
+  box-sizing: border-box;
+}
+.create-note__content__structure {
+  width: auto;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 30px;
+}
+.create-note__content__structure__headers {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin: 0;
+}
+.create-note__content__structure__headers__items {
+  height: 40px;
+  max-width: 70dvw;
+  padding: none;
+  margin: none;
+  box-sizing: border-box;
+}
+.create-note__content__structure__headers input {
+  width: 300px;
+  padding: 10px;
+}
+.create-note__content__structure__body {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.create-note__content__structure__body pre {
+  box-sizing: border-box;
+  width: inherit;
+  height: fit-content;
+  max-width: 70dvw;
+  min-height: 200px;
+  max-height: 500px;
+  margin: none;
+  padding: none;
+}
+@media only screen and (max-width: 720px) {
+  .create-note__content__structure__body pre {
+    max-height: 50dvh;
+  }
+}
+.create-note__content__structure__body pre textarea {
+  box-sizing: border-box;
+  width: inherit;
+  height: fit-content;
+  max-width: 70dvw;
+  min-height: 200px;
+  max-height: 500px;
+  margin: none;
+  padding: none;
+}
+@media only screen and (max-width: 720px) {
+  .create-note__content__structure__body pre textarea {
+    max-height: 50dvh;
+  }
+}
+
+.confirm-dialog {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: red;
+  box-sizing: border-box;
+  border-radius: 10px;
+  opacity: 0;
+  animation-name: dialogTransition;
+  animation-fill-mode: forwards;
+  animation-duration: 0.5s;
+}
+.confirm-dialog__container {
+  width: 90%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 30px;
+  border: 2px solid black;
+  box-sizing: border-box;
+  margin: 20px;
+  border-radius: 10px;
+}
+.confirm-dialog__container__question {
+  font-size: 30px;
+  margin: 0 10px 20px 10px;
+}
+.confirm-dialog__container__options {
+  width: 20%;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+}
+.confirm-dialog__container__options__button {
+  width: 80px;
+  height: 40px;
+}
+.confirm-dialog__container__options__button:hover {
+  cursor: pointer;
+}
+
+/*# sourceMappingURL=ConfirmDialog.css.map */

@@ -6,6 +6,7 @@ import NotePreview from "../components/NotePreview";
 import NotePageNav from "../components/NotePageNav";
 import { useAppSelector } from "../hooks/store";
 import { URLbackend } from "../assets/URLs";
+import { defaultNote } from "./Home";
 
 export interface Note {
   note_id: string;
@@ -52,8 +53,13 @@ export default function Notes() {
 
         try {
           const result = await fetch(URL, data);
-          const res = await result.json();
-          setNotesList(res);
+
+          if (result.status === 200) {
+            const res = await result.json();
+            setNotesList(res);
+          } else if (result.status === 204) {
+            setNotesList([defaultNote]);
+          }
         } catch (e) {
           console.error(e);
         }
@@ -68,10 +74,9 @@ export default function Notes() {
 
   // useEffect para la gestión de las páginas
   useEffect(() => {
-    const numOfPages =
-      notesList && notesList.length > 0
-        ? Math.ceil(notesList.length / 28)
-        : null;
+    const numOfPages = notesList && notesList.length > 0
+      ? Math.ceil(notesList.length / 28)
+      : null;
 
     const notesPages = [];
 
@@ -114,7 +119,7 @@ export default function Notes() {
       window.location.pathname.startsWith("/notes") &&
         !window.location.pathname.includes("search" || "id")
         ? true
-        : false
+        : false,
     );
   }, [numPage, state, refresh]);
 
@@ -141,7 +146,7 @@ export default function Notes() {
               notesList={notesList || []}
               toUrl={["general", window.location.pathname.toString()]}
             />
-          </div>
+          </div>,
         );
       } else {
         setReturnNotes(<p>No results...</p>);

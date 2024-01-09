@@ -46,11 +46,11 @@ export default function SearchNotes() {
         try {
           const result = await fetch(URL, data);
 
-          if (result.ok) {
+          if (result.status === 200) {
             const res = await result.json();
             setNotesList(res);
-          } else {
-            console.error(result.statusText);
+          } else if (result.status === 204) {
+            setNotesList([]);
           }
         } catch (e) {
           console.error(e);

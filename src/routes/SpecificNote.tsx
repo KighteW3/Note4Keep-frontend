@@ -3,15 +3,28 @@ import "../styles/SpecificNote.css";
 import { BackIcon, CheckIcon, DeleteIcon, UndoIcon } from "../assets/Icons";
 import { URLbackend, URLFrontend } from "../assets/URLs";
 import { NavLink } from "../components/NavLink";
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { Note } from "./Notes";
 import { refreshCount, refreshLog } from "../store/refreshNotes";
 import { useAppSelector } from "../hooks/store";
 import { useDispatch } from "react-redux";
 import { dialogToShow, turnDialog } from "../store/dialogDisplay";
 import ConfirmDialog from "../components/ConfirmDialog";
+import { Form } from "../components/CreateNote";
 
 const URL = `${URLbackend}/api/notes/spec-note`;
+
+interface noteData {
+  title: string,
+  priority: number,
+  text: string,
+}
+
+const noteDataDefault = {
+  title: "",
+  priority: 0,
+  text: "",
+}
 
 export default function SpecificNote() {
   const dispatch = useDispatch();
@@ -21,6 +34,10 @@ export default function SpecificNote() {
   const [noteContent, setNoteContent] = useState<Note>();
   const [optionsList, setOptionsList] = useState([<></>]);
   const navigate = useNavigate();
+  const [firstState, setFirstState] = useState<noteData>(noteDataDefault);
+  const [postState, setPostState] = useState<noteData>(noteDataDefault);
+  const [undoClass, setUndoClass] = useState("specific-note__util-bar__buttons__undo");
+
 
   useEffect(() => {
     const authRaw = window.localStorage.getItem("SESSION_ID");
@@ -46,6 +63,16 @@ export default function SpecificNote() {
           if (result.ok) {
             const res = await result.json();
             setNoteContent(res);
+            setFirstState({
+              title: res.title,
+              priority: res.priority,
+              text: res.text,
+            })
+            setPostState({
+              title: res.title,
+              priority: res.priority,
+              text: res.text,
+            })
           } else {
             throw "Problem getting note content";
           }
@@ -58,6 +85,10 @@ export default function SpecificNote() {
     }
   }, [noteId]);
 
+  /* useEffect(() => {
+    console.log(firstState);
+  }, [firstState]) */
+
   useEffect(() => {
     const individualOptionList = [];
 
@@ -67,7 +98,7 @@ export default function SpecificNote() {
           individualOptionList.push(
             <option key={i} value={2}>
               {2} {"(Default)"}
-            </option>,
+            </option>
           );
         } else if (i && i === noteContent.priority) {
           const x = noteContent.priority;
@@ -76,13 +107,13 @@ export default function SpecificNote() {
             <option key={i} value={x} selected>
               {x}
               {noteContent.priority === 2 ? " (Default)" : ""}
-            </option>,
+            </option>
           );
         } else {
           individualOptionList.push(
             <option key={i} value={i}>
               {i}
-            </option>,
+            </option>
           );
         }
       }
@@ -90,6 +121,125 @@ export default function SpecificNote() {
 
     setOptionsList(individualOptionList);
   }, [noteContent]);
+
+  /* useEffect(() => {
+
+    console.log(postState);
+  }, [postState]) */
+
+  const handleFormChange = (event: React.ChangeEvent<HTMLFormElement>) => {
+
+    console.log(`Estado de postState anterior: ${JSON.stringify(postState)}`);
+    let res = {
+      title: "",
+      priority: 0,
+      text: "",
+    };
+
+    switch (event.target.name) {
+      case "title":
+        setPostState({
+          title: event.target.value,
+          priority: postState.priority,
+          text: postState.text,
+        });
+        res = {
+          title: event.target.value,
+          priority: postState.priority,
+          text: postState.text,
+        };
+        break;
+      case "priority":
+        res = {
+          title: postState.title,
+          priority: event.target.value,
+          text: postState.text,
+        };
+        break;
+      case "text":
+        res = {
+          title: postState.title,
+          priority: postState.priority,
+          text: event.target.value,
+        };
+        break;
+      default:
+        res = {
+          title: postState.title,
+          priority: postState.priority,
+          text: postState.text,
+        };
+        console.error("Error, invalid form element name");
+    }
+
+    setPostState(res);
+    console.log(`Estado de postState posterior: ${JSON.stringify(res)}`);
+    // const cagaste = document.getElementById('puto el que lo lea');
+    // console.log(pito.value);
+
+  }
+
+  const handleUpdate = async (event: FormEvent) => {
+    event.preventDefault();
+
+    const form = event.target as typeof event.target & Form;
+
+    const title = form.title.value;
+
+    const priorityString = form.priority.value;
+    let priority: number = 0;
+
+    try {
+      priority = parseInt(priorityString);
+    } catch (e) {
+      console.error("Error" + e);
+      priority = 2;
+    }
+
+    if (!priority) {
+      console.error("Error: invalid priority field");
+    }
+
+    const text = form.text.value;
+
+    const token = window.localStorage.getItem("SESSION_ID");
+
+    if (token) {
+      const tokenDecoded = JSON.parse(token);
+
+      const data = {
+        method: "PATCH",
+        headers: {
+          "content-type": "application/json",
+          authorization: `Bearer ${tokenDecoded.token}`,
+        },
+        body: JSON.stringify({
+          note_id: noteId,
+          title: title,
+          priority: priority,
+          text: text,
+        }),
+      };
+
+      const URL = `${URLbackend}/api/notes/update-note`;
+
+      try {
+        const response = await fetch(URL, data);
+        const resParsed = await response.json();
+
+        if (response.ok) {
+          dispatch(refreshLog(response.statusText));
+          window.scrollTo(0, 0);
+        } else {
+          console.error(resParsed.error);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    } else {
+      window.open(`${URLFrontend}/`);
+    }
+  };
 
   const handleDelete = () => {
     const deleteNote = async () => {
@@ -116,7 +266,6 @@ export default function SpecificNote() {
 
         try {
           const result = await fetch(URL, data);
-          //const res = await result.json();
 
           if (result.ok) {
             dispatch(refreshLog(result.statusText));
@@ -141,8 +290,8 @@ export default function SpecificNote() {
           <ConfirmDialog
             question="Are you sure about deleting this note?"
             action={deleteNote}
-          />,
-        ),
+          />
+        )
       );
     }
   };
@@ -154,13 +303,15 @@ export default function SpecificNote() {
           <em>
             <b>ID:</b> {noteContent.note_id}
           </em>
-          <form>
+          <form id="update-form" onSubmit={handleUpdate}
+            onInput={handleFormChange}>
             <div>
               <input
                 type="text"
                 placeholder="Insert the note title"
                 defaultValue={noteContent.title}
                 name="title"
+                id="pito"
               />
               <select name="priority">
                 {optionsList.map((result) => {
@@ -192,6 +343,7 @@ export default function SpecificNote() {
         <div className="specific-note__util-bar__buttons">
           <div className="specific-note__util-bar__buttons__update">
             <CheckIcon />
+            <input type="submit" id="submit-loco" form="update-form" value="" />
           </div>
           <div className="specific-note__util-bar__buttons__undo">
             <UndoIcon />

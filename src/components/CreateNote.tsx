@@ -5,7 +5,7 @@ import "../styles/CreateNote.css";
 import DialogsBar from "./DialogsBar";
 import { URLbackend, URLFrontend } from "../assets/URLs";
 
-interface Form {
+export interface Form {
   title: { value: string };
   priority: { value: string };
   text: { value: string };
@@ -14,15 +14,15 @@ interface Form {
 export default function CreateNote() {
   const refresh = useAppSelector((state) => state.refreshNotes.refresh);
   const dispatch = useAppDispatch();
-  // const [optionsList, setOptionsList] = useState([<></>]);
+  const [optionsList, setOptionsList] = useState([<></>]);
 
-  /*useEffect(() => {
+  useEffect(() => {
     const x = [];
 
-    for (let i: number = 1; i < 5; i++) {
+    for (let i: number = 1; i < 6; i++) {
       i === 2
         ? x.push(
-          <option key={i} value={i}>
+          <option key={i} value={i} selected>
             {i} {"(Default)"}
           </option>,
         )
@@ -30,12 +30,12 @@ export default function CreateNote() {
     }
 
     setOptionsList(x);
-  }, []);*/
+  }, []);
 
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault();
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
 
-    const form = event.target as typeof event.target & Form;
+    const form = e.target as typeof e.target & Form;
 
     const title = form.title.value;
 
@@ -49,11 +49,9 @@ export default function CreateNote() {
       priority = 2;
     }
 
-    if (priority === null) {
-      console.error("Error");
+    if (!priority) {
+      console.error("Error: invalid priority field");
     }
-
-    console.log(typeof priority);
 
     const text = form.text.value;
 
@@ -79,7 +77,7 @@ export default function CreateNote() {
 
       const URL = `${URLbackend}/api/notes/create-note`;
 
-      (async () => {
+      try {
         const response = await fetch(URL, data);
         const resParsed = await response.json();
 
@@ -90,7 +88,9 @@ export default function CreateNote() {
         } else {
           console.error(resParsed.error);
         }
-      })();
+      } catch (e) {
+        console.error(e);
+      }
     } else {
       window.open(`${URLFrontend}/`);
     }
@@ -115,16 +115,17 @@ export default function CreateNote() {
                 name="priority"
                 defaultValue={2}
               >
-                {
-                  /* {optionsList.map((result) => {
+                {optionsList.map((result) => {
                   return result;
-                })} */
+                })}
+
+                {
+                  // <option value={1}>1</option>
+                  // <option value={2}>2 (Default)</option>
+                  // <option value={3}>3</option>
+                  // <option value={4}>4</option>
+                  // <option value={5}>5</option>
                 }
-                <option value={1}>1</option>
-                <option value={2}>2 (Default)</option>
-                <option value={3}>3</option>
-                <option value={4}>4</option>
-                <option value={5}>5</option>
               </select>
             </div>
             <div className="create-note__content__structure__body">

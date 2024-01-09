@@ -7,7 +7,12 @@ import CreateNote from "./CreateNote";
 import ConfirmDialog from "./ConfirmDialog";
 import { refreshCount, refreshLog } from "../store/refreshNotes";
 import { URLbackend } from "../assets/URLs";
-import { FiltersIcon, DeleteIcon, RefreshIcon, CreateNoteIcon } from "../assets/Icons";
+import {
+  CreateNoteIcon,
+  DeleteIcon,
+  FiltersIcon,
+  RefreshIcon,
+} from "../assets/Icons";
 
 interface FormStructure extends HTMLFormElement {
   search: { value: string };
@@ -58,20 +63,16 @@ export default function NotesNavBar() {
 
         try {
           const result = await fetch(URL, data);
-          const res = await result.json();
+          //const res = await result.json();
 
-          if (res.ok) {
-            dispatch(refreshLog(result.statusText));
-            dispatch(refreshCount(refresh + 1));
-            window.scrollTo(0, 0);
-          } else {
-            console.error(result.statusText);
-          }
+          dispatch(refreshLog(result.statusText));
+          dispatch(refreshCount(refresh + 1));
+          window.scrollTo(0, 0);
         } catch (e) {
           console.error(e);
         }
       } else {
-        console.error("No auth b");
+        console.error("No auth.");
       }
     };
 

@@ -21,7 +21,7 @@ interface notes {
   date: Date;
 }
 
-const defaultNote = {
+export const defaultNote = {
   note_id: "id-example",
   title: "title-example",
   priority: 5,
@@ -72,11 +72,11 @@ export default function Home() {
 
         try {
           const response = await fetch(URL, data);
-          const res = await response.json();
 
-          if (response.ok) {
+          if (response.status === 200) {
+            const res = await response.json();
             setNotesList(res);
-          } else {
+          } else if (response.status === 204) {
             setNotesList([defaultNote]);
           }
         } catch (e) {
@@ -95,54 +95,54 @@ export default function Home() {
   return (
     <div className="home">
       <div className="home-welcome">
-        {logged.ok ? (
-          <h1>Welcome {logged.userInfo.username} !</h1>
-        ) : (
-          <h1>Welcome anonymous !</h1>
-        )}
+        {logged.ok
+          ? <h1>Welcome {logged.userInfo.username} !</h1>
+          : <h1>Welcome anonymous !</h1>}
       </div>
       <div className="home-notes-preview">
-        {notesList !== null ? (
-          <div className="home-notes-preview__container">
-            <div className="home-notes-preview__container__title">
-              <h2>
-                Notes preview -{" "}
-                {monthNames[actualDate.getMonth()].substring(0, 3)}
-                {"/"}
-                {actualDate.getFullYear()}
-              </h2>
-            </div>
-            <div className="home-notes-preview__container__content">
-              {notesList.map((result) => {
-                const actualYear = new Date().getFullYear();
-                const actualMonth = new Date().getMonth();
-                const resDate = new Date(result.date);
+        {notesList !== null
+          ? (
+            <div className="home-notes-preview__container">
+              <div className="home-notes-preview__container__title">
+                <h2>
+                  Notes preview -{" "}
+                  {monthNames[actualDate.getMonth()].substring(0, 3)}
+                  {"/"}
+                  {actualDate.getFullYear()}
+                </h2>
+              </div>
+              <div className="home-notes-preview__container__content">
+                {notesList.map((result) => {
+                  const actualYear = new Date().getFullYear();
+                  const actualMonth = new Date().getMonth();
+                  const resDate = new Date(result.date);
 
-                if (
-                  resDate.getFullYear() === actualYear &&
-                  resDate.getMonth() == actualMonth
-                ) {
-                  return (
-                    <NotePreview
-                      note_id={result.note_id}
-                      title={result.title}
-                      priority={result.priority}
-                      text={result.text}
-                      redirect={result.note_id}
-                    />
-                  );
-                }
-              })}
+                  if (
+                    resDate.getFullYear() === actualYear &&
+                    resDate.getMonth() == actualMonth
+                  ) {
+                    return (
+                      <NotePreview
+                        note_id={result.note_id}
+                        title={result.title}
+                        priority={result.priority}
+                        text={result.text}
+                        redirect={result.note_id}
+                      />
+                    );
+                  }
+                })}
+              </div>
             </div>
-          </div>
-        ) : (
-          <div className="home-notes-preview__alert">
-            <p>
-              No user provided, so no online notes stored. Try making an account
-              or login into one and create some notes.
-            </p>
-          </div>
-        )}
+          )
+          : (
+            <div className="home-notes-preview__alert">
+              <p>
+                No user provided, so no online notes stored. Try making an
+                account or login into one and create some notes.
+              </p>
+            </div>
+          )}
       </div>
       <div></div>
     </div>

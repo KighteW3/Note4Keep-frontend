@@ -1,6 +1,6 @@
 import { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { URLFrontend, URLbackend } from "../assets/URLs";
+import { URLbackend, URLFrontend } from "../assets/URLs";
 import "../styles/AuthInterface.css";
 
 const URL = `${URLbackend}/api/users/login`;

@@ -78,13 +78,13 @@ export default function NotePageNav({
       <div className="note-page-nav-container">
         <nav className="note-page-nav">
           <Link onClick={handleClick} className={backStyle} to={backPage}>
-            Anterior
+            Back
           </Link>
           <div>
-            {numPage} de {numOfPages}
+            {numPage} / {numOfPages}
           </div>
           <Link onClick={handleClick} className={nextStyle} to={nextPage}>
-            Siguiente
+            Next
           </Link>
         </nav>
       </div>
