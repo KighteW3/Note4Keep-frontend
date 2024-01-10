@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import { dialogToShow, turnDialog } from "../store/dialogDisplay";
 import { refreshCount } from "../store/refreshNotes";
 import { useAppSelector } from "../hooks/store";
-import { useNavigate } from "react-router-dom";
 
 interface ConfirmDialog {
   question: string;
@@ -12,7 +11,6 @@ interface ConfirmDialog {
 }
 
 export default function ConfirmDialog({ question, action }: ConfirmDialog) {
-  const navigate = useNavigate();
   const refresh = useAppSelector((state) => state.refreshNotes.refresh);
   const dispatch = useDispatch();
 
