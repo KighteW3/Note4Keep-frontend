@@ -13,7 +13,7 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +148 src/routes/SpecificNote.tsx
+badd +134 src/routes/SpecificNote.tsx
 badd +102 src/scss/SpecificNote.scss
 badd +30 src/routes/Notes.tsx
 badd +1 src/scss/Login.scss
@@ -51,12 +51,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 148 - ((18 * winheight(0) + 19) / 38)
+let s:l = 130 - ((15 * winheight(0) + 19) / 38)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 148
-normal! 025|
+keepjumps 130
+normal! 063|
 lcd ~/Dev/projects/note4keep/frontend
 wincmd w
 argglobal

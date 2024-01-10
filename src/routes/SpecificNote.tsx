@@ -122,10 +122,17 @@ export default function SpecificNote() {
     setOptionsList(individualOptionList);
   }, [noteContent]);
 
-  /* useEffect(() => {
+  useEffect(() => {
+    if (JSON.stringify(postState) !== JSON.stringify(firstState)) {
+      setUndoClass("specific-note__util-bar__buttons__undo-active");
+    } else {
+      if (undoClass.endsWith("active")) {
+        setUndoClass("specific-note__util-bar__buttons__undo");
+      }
+    }
 
-    console.log(postState);
-  }, [postState]) */
+    console.log(undoClass);
+  }, [postState, firstState, undoClass])
 
   const handleFormChange = (event: React.ChangeEvent<HTMLFormElement>) => {
 
@@ -136,13 +143,10 @@ export default function SpecificNote() {
       text: "",
     };
 
+    let prio = 0;
+
     switch (event.target.name) {
       case "title":
-        setPostState({
-          title: event.target.value,
-          priority: postState.priority,
-          text: postState.text,
-        });
         res = {
           title: event.target.value,
           priority: postState.priority,
@@ -150,9 +154,14 @@ export default function SpecificNote() {
         };
         break;
       case "priority":
+        try {
+          prio = parseInt(event.target.value);
+        } catch (e) {
+          console.error("Cannot parse priority input", e);
+        }
         res = {
           title: postState.title,
-          priority: event.target.value,
+          priority: prio,
           text: postState.text,
         };
         break;
@@ -173,10 +182,6 @@ export default function SpecificNote() {
     }
 
     setPostState(res);
-    console.log(`Estado de postState posterior: ${JSON.stringify(res)}`);
-    // const cagaste = document.getElementById('puto el que lo lea');
-    // console.log(pito.value);
-
   }
 
   const handleUpdate = async (event: FormEvent) => {
@@ -296,41 +301,47 @@ export default function SpecificNote() {
     }
   };
 
-  function NoteContent() {
-    if (noteContent) {
-      return (
-        <>
-          <em>
-            <b>ID:</b> {noteContent.note_id}
-          </em>
-          <form id="update-form" onSubmit={handleUpdate}
-            onInput={handleFormChange}>
-            <div>
-              <input
-                type="text"
-                placeholder="Insert the note title"
-                defaultValue={noteContent.title}
-                name="title"
-                id="pito"
-              />
-              <select name="priority">
-                {optionsList.map((result) => {
-                  return result;
-                })}
-              </select>
-            </div>
-            <pre>
-              <textarea
-                name="text"
-                required
-                defaultValue={noteContent.text}
-              ></textarea>
-            </pre>
-          </form>
-        </>
-      );
-    }
+
+  let form = (<></>);
+  if (noteContent) {
+    form = (
+      <>
+        <em>
+          <b>ID:</b> {noteContent.note_id}
+        </em>
+        <form id="update-form" onSubmit={handleUpdate}
+          onInput={handleFormChange}>
+          <div>
+            <input
+              type="text"
+              placeholder="Insert the note title"
+              defaultValue={noteContent.title}
+              name="title"
+              id="pito"
+              required
+            />
+            <select name="priority">
+              {optionsList.map((result) => {
+                return result;
+              })}
+            </select>
+          </div>
+          <pre>
+            <textarea
+              name="text"
+              required
+              defaultValue={noteContent.text}
+            ></textarea>
+          </pre>
+        </form>
+      </>
+    );
+  } else {
+    form = (<>
+      <span>The note has no content.</span>
+    </>)
   }
+
 
   return (
     <div className="specific-note">
@@ -345,7 +356,7 @@ export default function SpecificNote() {
             <CheckIcon />
             <input type="submit" id="submit-loco" form="update-form" value="" />
           </div>
-          <div className="specific-note__util-bar__buttons__undo">
+          <div className={undoClass}>
             <UndoIcon />
           </div>
           <div
@@ -357,7 +368,7 @@ export default function SpecificNote() {
         </div>
       </div>
       <div className="specific-note__box">
-        <NoteContent />
+        {form}
       </div>
     </div>
   );
