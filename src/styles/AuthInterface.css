@@ -79,7 +79,6 @@ main {
   width: 33px;
   height: 33px;
   padding: 5px;
-  display: block;
   display: flex;
   justify-content: center;
   align-items: center;

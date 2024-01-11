@@ -6,14 +6,15 @@ import { LoadIcon } from "../assets/Icons";
 
 const URL = `${URLbackend}/api/users/login`;
 
+const [subInactive, subActive] = ["auth-interface__submit__loading",
+  "auth-interface__submit__loading-active"];
+
 export default function Register() {
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState("auth-interface__submit__loading");
+  const [isLoading, setIsLoading] = useState(subInactive);
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-
-    setIsLoading("auth-interface__submit__loading-active");
 
     const form = event.target as typeof event.target & {
       username: { value: string };
@@ -35,6 +36,8 @@ export default function Register() {
       }),
     };
 
+    setIsLoading(subActive);
+
     (async () => {
       try {
         const res = await fetch(URL, data);
@@ -46,13 +49,14 @@ export default function Register() {
           window.open(`${URLFrontend}/`, "_self");
         } else {
           console.error(res.statusText);
+          setIsLoading(subInactive);
         }
       } catch (e) {
         console.error(e);
+        setIsLoading(subInactive);
       }
     })();
 
-    setIsLoading("auth-interface__submit__loading");
   };
 
   return (
