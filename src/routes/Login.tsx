@@ -1,15 +1,19 @@
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { URLbackend, URLFrontend } from "../assets/URLs";
 import "../styles/AuthInterface.css";
+import { LoadIcon } from "../assets/Icons";
 
 const URL = `${URLbackend}/api/users/login`;
 
 export default function Register() {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState("auth-interface__submit__loading");
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
+
+    setIsLoading("auth-interface__submit__loading-active");
 
     const form = event.target as typeof event.target & {
       username: { value: string };
@@ -47,6 +51,8 @@ export default function Register() {
         console.error(e);
       }
     })();
+
+    setIsLoading("auth-interface__submit__loading");
   };
 
   return (
@@ -75,7 +81,12 @@ export default function Register() {
               required
             />
           </div>
-          <input type="submit" value="Enviar" />
+          <div className="auth-interface__submit">
+            <input type="submit" value="Enviar" />
+            <div className={isLoading}>
+              <LoadIcon />
+            </div>
+          </div>
         </form>
       </div>
     </div>
