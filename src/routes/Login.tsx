@@ -2,16 +2,13 @@ import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { URLbackend, URLFrontend } from "../assets/URLs";
 import "../styles/AuthInterface.css";
-import { LoadIcon } from "../assets/Icons";
+import Loading from "../components/Loading";
 
 const URL = `${URLbackend}/api/users/login`;
 
-const [subInactive, subActive] = ["auth-interface__submit__loading",
-  "auth-interface__submit__loading-active"];
-
 export default function Register() {
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(subInactive);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -36,7 +33,7 @@ export default function Register() {
       }),
     };
 
-    setIsLoading(subActive);
+    setIsLoading(true);
 
     (async () => {
       try {
@@ -49,11 +46,11 @@ export default function Register() {
           window.open(`${URLFrontend}/`, "_self");
         } else {
           console.error(res.statusText);
-          setIsLoading(subInactive);
+          setIsLoading(false);
         }
       } catch (e) {
         console.error(e);
-        setIsLoading(subInactive);
+        setIsLoading(false);
       }
     })();
 
@@ -87,9 +84,7 @@ export default function Register() {
           </div>
           <div className="auth-interface__submit">
             <input type="submit" value="Enviar" />
-            <div className={isLoading}>
-              <LoadIcon />
-            </div>
+            <Loading isLoading={isLoading} />
           </div>
         </form>
       </div>

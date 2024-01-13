@@ -1,7 +1,5 @@
 @use "./App.scss";
 
-$loadingSize: 33px;
-
 .auth {
   box-sizing: border-box;
   height: 100dvh;
@@ -41,47 +39,6 @@ $loadingSize: 33px;
     input {
       height: 25px;
       width: auto;
-    }
-
-    &__loading {
-      width: $loadingSize;
-      height: $loadingSize;
-      padding: 5px;
-      display: none;
-
-      &-active {
-        width: $loadingSize;
-        height: $loadingSize;
-        padding: 5px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        animation-name: loadingRotate;
-        animation-duration: 1s;
-        animation-fill-mode: forwards;
-        animation-iteration-count: infinite;
-
-
-        @keyframes loadingRotate {
-          0% {
-            transform: rotate(0);
-          }
-
-          100% {
-            transform: rotate(360deg);
-          }
-        }
-
-        svg {
-          width: 100%;
-          height: 100%;
-        }
-      }
-
-      svg {
-        width: 100%;
-        height: 100%;
-      }
     }
   }
 }

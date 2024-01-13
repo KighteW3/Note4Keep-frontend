@@ -34,6 +34,10 @@ main {
 .notes-main {
   width: 100%;
   height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .notes-main__notes-container, .search-notes__content {

@@ -13,16 +13,26 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +1 src/routes/SpecificNote.tsx
+badd +21 src/routes/SpecificNote.tsx
 badd +1 src/scss/SpecificNote.scss
-badd +30 src/routes/Notes.tsx
+badd +1 src/routes/Notes.tsx
 badd +1 src/scss/Login.scss
-badd +79 src/routes/Login.tsx
-badd +44 src/scss/AuthInterface.scss
-badd +311 src/assets/Icons.tsx
+badd +87 src/routes/Login.tsx
+badd +26 src/scss/AuthInterface.scss
+badd +258 src/assets/Icons.tsx
+badd +1 src/scss/App.scss
+badd +34 src/components/NavBar.tsx
+badd +26 src/hooks/useAuth.tsx
+badd +9 src/components/Loading.tsx
+badd +1 src/scss/Loading.scss
+badd +10 src/routes/Register.tsx
+badd +20 src/scss/NotePreview.scss
+badd +1 src/components/NotePageNav.tsx
+badd +4 src/components/NotePreview.tsx
+badd +9 src/scss/Notes.scss
 argglobal
 %argdel
-edit src/assets/Icons.tsx
+edit src/routes/Notes.tsx
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
@@ -39,10 +49,10 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe 'vert 1resize ' . ((&columns * 109 + 79) / 158)
-exe 'vert 2resize ' . ((&columns * 48 + 79) / 158)
+exe 'vert 1resize ' . ((&columns * 105 + 79) / 158)
+exe 'vert 2resize ' . ((&columns * 52 + 79) / 158)
 argglobal
-balt src/routes/Login.tsx
+balt src/components/NotePreview.tsx
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -53,20 +63,20 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 260 - ((9 * winheight(0) + 19) / 38)
+let s:l = 1 - ((0 * winheight(0) + 19) / 38)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 260
+keepjumps 1
 normal! 044|
 lcd ~/Dev/projects/note4keep/frontend
 wincmd w
 argglobal
-if bufexists(fnamemodify("~/Dev/projects/note4keep/frontend/src/scss/AuthInterface.scss", ":p")) | buffer ~/Dev/projects/note4keep/frontend/src/scss/AuthInterface.scss | else | edit ~/Dev/projects/note4keep/frontend/src/scss/AuthInterface.scss | endif
+if bufexists(fnamemodify("~/Dev/projects/note4keep/frontend/src/scss/Notes.scss", ":p")) | buffer ~/Dev/projects/note4keep/frontend/src/scss/Notes.scss | else | edit ~/Dev/projects/note4keep/frontend/src/scss/Notes.scss | endif
 if &buftype ==# 'terminal'
-  silent file ~/Dev/projects/note4keep/frontend/src/scss/AuthInterface.scss
+  silent file ~/Dev/projects/note4keep/frontend/src/scss/Notes.scss
 endif
-balt ~/Dev/projects/note4keep/frontend/src/routes/SpecificNote.tsx
+balt ~/Dev/projects/note4keep/frontend/src/routes/Notes.tsx
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -77,16 +87,16 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 45 - ((32 * winheight(0) + 19) / 38)
+let s:l = 1 - ((0 * winheight(0) + 19) / 38)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 45
-normal! 0
+keepjumps 1
+normal! 018|
+lcd ~/Dev/projects/note4keep/frontend
 wincmd w
-2wincmd w
-exe 'vert 1resize ' . ((&columns * 109 + 79) / 158)
-exe 'vert 2resize ' . ((&columns * 48 + 79) / 158)
+exe 'vert 1resize ' . ((&columns * 105 + 79) / 158)
+exe 'vert 2resize ' . ((&columns * 52 + 79) / 158)
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf

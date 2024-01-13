@@ -1,11 +1,13 @@
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { useAppDispatch } from "../hooks/store";
 import { updateLoginInfo } from "../store/userInfo";
 import { URLFrontend, URLbackend } from "../assets/URLs";
 import "../styles/AuthInterface.css";
+import Loading from "../components/Loading";
 
 export default function Register() {
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useAppDispatch();
   const authData = useAuth();
 
@@ -35,6 +37,8 @@ export default function Register() {
       }),
     };
 
+    setIsLoading(true);
+
     (async () => {
       try {
         const url = `${URLbackend}/api/users/create-user`;
@@ -47,9 +51,11 @@ export default function Register() {
           window.open(`${URLFrontend}/`, "_self");
         } else {
           console.error(res.statusText);
+          setIsLoading(false);
         }
       } catch (e) {
         console.error(e);
+        setIsLoading(false);
       }
     })();
   };
@@ -91,7 +97,10 @@ export default function Register() {
               name="email"
             />
           </div>
-          <input type="submit" value="Enviar" />
+          <div className="auth-interface__submit">
+            <input type="submit" value="Enviar" />
+            <Loading isLoading={isLoading} />
+          </div>
         </form>
       </div>
     </div>

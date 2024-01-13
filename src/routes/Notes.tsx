@@ -4,6 +4,7 @@ import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import NotesNavBar from "../components/NotesNavBar";
 import NotePreview from "../components/NotePreview";
 import NotePageNav from "../components/NotePageNav";
+import Loading from "../components/Loading";
 import { useAppSelector } from "../hooks/store";
 import { URLbackend } from "../assets/URLs";
 import { defaultNote } from "./Home";
@@ -34,12 +35,15 @@ export default function Notes() {
   const { state } = useLocation();
   const [returnNotes, setReturnNotes] = useState(<></>);
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   // useEffect para el funcionamiento del componente
   useEffect(() => {
     const authRaw = window.localStorage.getItem("SESSION_ID");
 
     if (authRaw) {
+      setIsLoading(true);
+
       (async () => {
         const auth = await JSON.parse(authRaw);
 
@@ -62,6 +66,7 @@ export default function Notes() {
           }
         } catch (e) {
           console.error(e);
+          setIsLoading(false);
         }
       })();
     } else {
@@ -149,12 +154,12 @@ export default function Notes() {
           </div>,
         );
       } else {
-        setReturnNotes(<p>No results...</p>);
+        setReturnNotes(<Loading isLoading={isLoading} />);
       }
     } else {
       setReturnNotes(<Outlet />);
     }
-  }, [isRoot, notePageOrd, notesList, numPageToUse, refresh]);
+  }, [isRoot, notePageOrd, notesList, numPageToUse, refresh, isLoading]);
 
   return (
     <>

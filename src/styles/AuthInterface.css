@@ -69,39 +69,5 @@ main {
   height: 25px;
   width: auto;
 }
-.auth-interface__submit__loading {
-  width: 33px;
-  height: 33px;
-  padding: 5px;
-  display: none;
-}
-.auth-interface__submit__loading-active {
-  width: 33px;
-  height: 33px;
-  padding: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  animation-name: loadingRotate;
-  animation-duration: 1s;
-  animation-fill-mode: forwards;
-  animation-iteration-count: infinite;
-}
-@keyframes loadingRotate {
-  0% {
-    transform: rotate(0);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-.auth-interface__submit__loading-active svg {
-  width: 100%;
-  height: 100%;
-}
-.auth-interface__submit__loading svg {
-  width: 100%;
-  height: 100%;
-}
 
 /*# sourceMappingURL=AuthInterface.css.map */
