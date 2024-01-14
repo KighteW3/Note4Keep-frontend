@@ -33,12 +33,14 @@ badd +2 src/scss/Notes.scss
 badd +84 src/routes/SearchNotes.tsx
 badd +1 src/scss/SearchNotes.scss
 badd +33 src/App.tsx
-badd +80 src/routes/Home.tsx
+badd +142 src/routes/Home.tsx
 badd +22 src/store/userInfo.ts
 badd +52 src/scss/Home.scss
+badd +5 src/components/Footer.tsx
+badd +1 src/scss/Footer.scss
 argglobal
 %argdel
-edit src/routes/Home.tsx
+edit src/components/Footer.tsx
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
@@ -58,7 +60,7 @@ set winwidth=1
 exe 'vert 1resize ' . ((&columns * 119 + 79) / 158)
 exe 'vert 2resize ' . ((&columns * 38 + 79) / 158)
 argglobal
-balt src/scss/Home.scss
+balt src/components/NotePreview.tsx
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -69,20 +71,20 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 104 - ((14 * winheight(0) + 19) / 38)
+let s:l = 5 - ((4 * winheight(0) + 19) / 38)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 104
-normal! 013|
+keepjumps 5
+normal! 069|
 lcd ~/Dev/projects/note4keep/frontend
 wincmd w
 argglobal
-if bufexists(fnamemodify("~/Dev/projects/note4keep/frontend/src/scss/Home.scss", ":p")) | buffer ~/Dev/projects/note4keep/frontend/src/scss/Home.scss | else | edit ~/Dev/projects/note4keep/frontend/src/scss/Home.scss | endif
+if bufexists(fnamemodify("~/Dev/projects/note4keep/frontend/src/scss/Footer.scss", ":p")) | buffer ~/Dev/projects/note4keep/frontend/src/scss/Footer.scss | else | edit ~/Dev/projects/note4keep/frontend/src/scss/Footer.scss | endif
 if &buftype ==# 'terminal'
-  silent file ~/Dev/projects/note4keep/frontend/src/scss/Home.scss
+  silent file ~/Dev/projects/note4keep/frontend/src/scss/Footer.scss
 endif
-balt ~/Dev/projects/note4keep/frontend/src/scss/SearchNotes.scss
+balt ~/Dev/projects/note4keep/frontend/src/scss/Home.scss
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -93,12 +95,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 52 - ((18 * winheight(0) + 19) / 38)
+let s:l = 1 - ((0 * winheight(0) + 19) / 38)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 52
-normal! 012|
+keepjumps 1
+normal! 0
 lcd ~/Dev/projects/note4keep/frontend
 wincmd w
 exe 'vert 1resize ' . ((&columns * 119 + 79) / 158)
