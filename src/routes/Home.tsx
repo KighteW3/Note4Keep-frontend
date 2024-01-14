@@ -75,6 +75,8 @@ export default function Home() {
             const res = await response.json();
             setNotesList(res);
             setIsLoading(false);
+          } else {
+            setIsLoading(false);
           }
         } catch (e) {
           console.error(e);
