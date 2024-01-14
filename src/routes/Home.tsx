@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import NotePreview from "../components/NotePreview";
 import { URLbackend } from "../assets/URLs";
+import Loading from "../components/Loading";
 
 interface resultInfo {
   ok: boolean;
@@ -21,13 +22,8 @@ interface notes {
   date: Date;
 }
 
-export const defaultNote = {
-  note_id: "id-example",
-  title: "title-example",
-  priority: 5,
-  text: "text-example",
-  date: new Date(),
-};
+const actualYear = new Date().getFullYear();
+const actualMonth = new Date().getMonth();
 
 const monthNames = [
   "January",
@@ -50,6 +46,7 @@ export default function Home() {
   const dispatch = useAppDispatch();
   const [notesList, setNotesList] = useState<notes[] | null>([]);
   const [actualDate, setActualDate] = useState(new Date());
+  const [isLoading, setIsLoading] = useState(false);
 
   const location = useLocation();
   const render = location.state?.shouldRender;
@@ -58,6 +55,7 @@ export default function Home() {
     const authRaw = window.localStorage.getItem("SESSION_ID");
 
     if (authRaw) {
+      setIsLoading(true);
       (async () => {
         const auth = await JSON.parse(authRaw);
         const URL = `${URLbackend}/api/notes`;
@@ -76,11 +74,11 @@ export default function Home() {
           if (response.status === 200) {
             const res = await response.json();
             setNotesList(res);
-          } else if (response.status === 204) {
-            setNotesList([defaultNote]);
+            setIsLoading(false);
           }
         } catch (e) {
           console.error(e);
+          setIsLoading(false);
         }
       })();
     } else {
@@ -92,6 +90,47 @@ export default function Home() {
     setActualDate(actualDate);
   }, [refresh, logged, dispatch, render]);
 
+  const getCurrentNotes = () => {
+    let currentNoteExists = false;
+    const toReturn = [<></>];
+
+    if (notesList && notesList.length > 0) {
+
+      for (let i = 0; i < notesList.length; i++) {
+        const resDate = new Date(notesList[i].date);
+
+        if (resDate.getFullYear() === actualYear && resDate.getMonth() === actualMonth) {
+          currentNoteExists = true;
+          break;
+        }
+      }
+
+      currentNoteExists ? notesList.map((result) => {
+        const resDate = new Date(result.date);
+
+        if (
+          resDate.getFullYear() === actualYear &&
+          resDate.getMonth() == actualMonth
+        ) {
+          toReturn.push(
+            <NotePreview
+              note_id={result.note_id}
+              title={result.title}
+              priority={result.priority}
+              text={result.text}
+              redirect={result.note_id}
+            />
+          );
+        }
+      }) : toReturn.push(<h1>No notes created this month...</h1>);
+    } else {
+      toReturn.push(<h1>No results...</h1>);
+    }
+
+
+    return toReturn;
+  }
+
   return (
     <div className="home">
       <div className="home-welcome">
@@ -100,7 +139,7 @@ export default function Home() {
           : <h1>Welcome anonymous !</h1>}
       </div>
       <div className="home-notes-preview">
-        {notesList !== null
+        {logged.ok
           ? (
             <div className="home-notes-preview__container">
               <div className="home-notes-preview__container__title">
@@ -111,27 +150,14 @@ export default function Home() {
                   {actualDate.getFullYear()}
                 </h2>
               </div>
-              <div className="home-notes-preview__container__content">
-                {notesList.map((result) => {
-                  const actualYear = new Date().getFullYear();
-                  const actualMonth = new Date().getMonth();
-                  const resDate = new Date(result.date);
-
-                  if (
-                    resDate.getFullYear() === actualYear &&
-                    resDate.getMonth() == actualMonth
-                  ) {
-                    return (
-                      <NotePreview
-                        note_id={result.note_id}
-                        title={result.title}
-                        priority={result.priority}
-                        text={result.text}
-                        redirect={result.note_id}
-                      />
-                    );
-                  }
-                })}
+              <div className={!isLoading ?
+                "home-notes-preview__container__content"
+                : "home-notes-preview__container__content-loading"}>
+                {!isLoading ? getCurrentNotes().map((res) => {
+                  return (
+                    res
+                  )
+                }) : <Loading isLoading={isLoading} />}
               </div>
             </div>
           )

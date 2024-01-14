@@ -78,12 +78,27 @@ main {
   margin: 10px;
 }
 .home-notes-preview__container__content {
+  color: white;
   width: 100%;
   height: auto;
+  min-height: 200px;
   box-sizing: border-box;
   display: flex;
+  align-items: center;
   gap: 10px;
   overflow-x: scroll;
+}
+.home-notes-preview__container__content-loading {
+  color: white;
+  width: 100%;
+  height: auto;
+  min-height: 200px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  overflow-x: scroll;
+  justify-content: center;
 }
 .home-notes-preview__alert {
   width: 90%;

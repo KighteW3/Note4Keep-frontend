@@ -47,6 +47,7 @@ export default function Register() {
 
         if (res.ok) {
           window.localStorage.setItem("SESSION_ID", JSON.stringify(result));
+          setIsLoading(false);
           dispatch(updateLoginInfo(authData));
           window.open(`${URLFrontend}/`, "_self");
         } else {

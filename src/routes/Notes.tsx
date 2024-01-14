@@ -7,7 +7,6 @@ import NotePageNav from "../components/NotePageNav";
 import Loading from "../components/Loading";
 import { useAppSelector } from "../hooks/store";
 import { URLbackend } from "../assets/URLs";
-import { defaultNote } from "./Home";
 
 export interface Note {
   note_id: string;
@@ -61,8 +60,10 @@ export default function Notes() {
           if (result.status === 200) {
             const res = await result.json();
             setNotesList(res);
+            setIsLoading(false);
           } else if (result.status === 204) {
-            setNotesList([defaultNote]);
+            setNotesList([noteExample]);
+            setIsLoading(false);
           }
         } catch (e) {
           console.error(e);

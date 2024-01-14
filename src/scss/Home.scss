@@ -48,13 +48,26 @@
       }
     }
 
-    &__content {
+    @mixin content {
+      color: white;
       width: 100%;
       height: auto;
+      min-height: 200px;
       box-sizing: border-box;
       display: flex;
+      align-items: center;
       gap: 10px;
       overflow-x: scroll;
+    }
+
+    &__content {
+      @include content;
+
+      &-loading {
+        @include content;
+        justify-content: center;
+      }
+
     }
   }
 

@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import NotePreview from "../components/NotePreview";
 import type { Note } from "./Notes";
-
 import "../styles/SearchNotes.css";
 import NotePageNav from "../components/NotePageNav";
 import { useAppSelector } from "../hooks/store";
 import { URLbackend } from "../assets/URLs";
+import Loading from "../components/Loading";
 
 const noteExample = {
   note_id: "id example",
@@ -24,10 +24,12 @@ export default function SearchNotes() {
   const [numPageToUse, setNumPageToUse] = useState<number>(0);
   const navigate = useNavigate();
   const refresh = useAppSelector((state) => state.refreshNotes.refresh);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const token = window.localStorage.getItem("SESSION_ID");
 
+    setIsLoading(true);
     (async () => {
       if (token) {
         const tokenDecoded = JSON.parse(token);
@@ -49,11 +51,14 @@ export default function SearchNotes() {
           if (result.status === 200) {
             const res = await result.json();
             setNotesList(res);
+            setIsLoading(false);
           } else if (result.status === 204) {
             setNotesList([]);
+            setIsLoading(false);
           }
         } catch (e) {
           console.error(e);
+          setIsLoading(false);
         }
       }
     })();
@@ -117,7 +122,7 @@ export default function SearchNotes() {
     <div className="search-notes">
       <div className="search-notes__content">
         <div className="search-notes__content__container">
-          {notesList && notePageOrd[numPageToUse]
+          {isLoading ? <Loading isLoading={isLoading} /> : notesList && notePageOrd[numPageToUse]
             ? (
               notePageOrd[numPageToUse].map((result) => {
                 return (
@@ -131,7 +136,7 @@ export default function SearchNotes() {
                 );
               })
             )
-            : <>Not found...</>}
+            : <>No results...</>}
         </div>
         <NotePageNav
           numPageInt={numPageToUse}
