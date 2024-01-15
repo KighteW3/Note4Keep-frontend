@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { dialogToShow, turnDialog } from "../store/dialogDisplay";
 import ConfirmDialog from "../components/ConfirmDialog";
 import { Form } from "../components/CreateNote";
+import Loading from "../components/Loading";
 
 const URL = `${URLbackend}/api/notes/spec-note`;
 
@@ -37,6 +38,7 @@ export default function SpecificNote() {
   const [firstState, setFirstState] = useState<noteData>(noteDataDefault);
   const [postState, setPostState] = useState<noteData>(noteDataDefault);
   const [undoClass, setUndoClass] = useState("specific-note__util-bar__buttons__undo");
+  const [isLoading, setIsLoading] = useState(false);
 
 
   useEffect(() => {
@@ -45,6 +47,7 @@ export default function SpecificNote() {
     if (authRaw) {
       const auth = JSON.parse(authRaw);
 
+      setIsLoading(true);
       (async () => {
         const data = {
           method: "POST",
@@ -73,11 +76,14 @@ export default function SpecificNote() {
               priority: res.priority,
               text: res.text,
             })
+            setIsLoading(false);
           } else {
+            setIsLoading(false);
             throw "Problem getting note content";
           }
         } catch (e) {
           console.error(e);
+          setIsLoading(false);
         }
       })();
     } else {
@@ -305,11 +311,13 @@ export default function SpecificNote() {
   let form = (<></>);
   if (noteContent) {
     form = (
-      <>
-        <em>
-          <b>ID:</b> {noteContent.note_id}
-        </em>
-        <form id="update-form" onSubmit={handleUpdate}
+      <div className="specific-note__box__content">
+        <div className="specific-note__box__content__id">
+          <em>
+            <b>ID:</b> {noteContent.note_id}
+          </em>
+        </div>
+        <form className="specific-note__box__content__form" id="update-form" onSubmit={handleUpdate}
           onInput={handleFormChange}>
           <div>
             <input
@@ -334,7 +342,7 @@ export default function SpecificNote() {
             ></textarea>
           </pre>
         </form>
-      </>
+      </div>
     );
   } else {
     form = (<>
@@ -368,7 +376,7 @@ export default function SpecificNote() {
         </div>
       </div>
       <div className="specific-note__box">
-        {form}
+        {!isLoading ? form : <Loading isLoading={isLoading} />}
       </div>
     </div>
   );

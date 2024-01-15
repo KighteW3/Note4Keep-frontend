@@ -32,7 +32,7 @@ main {
   }
 }
 .footer {
-  height: 200px;
+  height: auto;
   background-color: green;
 }
 

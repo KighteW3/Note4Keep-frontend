@@ -1,6 +1,6 @@
 @use "./App.scss";
 
-@keyframes pepito {
+@keyframes fadeIn {
   0% {
     transform: scale(0.7);
   }
@@ -15,7 +15,7 @@
     cursor: pointer;
   }
 
-  animation: pepito forwards 0.5s;
+  animation: fadeIn forwards 0.5s;
   width: 300px;
   height: 160px;
   background-color: white;
