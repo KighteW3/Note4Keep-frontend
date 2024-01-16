@@ -13,8 +13,8 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +315 src/routes/SpecificNote.tsx
-badd +154 src/scss/SpecificNote.scss
+badd +320 src/routes/SpecificNote.tsx
+badd +153 src/scss/SpecificNote.scss
 badd +19 src/routes/Notes.tsx
 badd +1 src/scss/Login.scss
 badd +45 src/routes/Login.tsx
@@ -57,8 +57,8 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe 'vert 1resize ' . ((&columns * 114 + 79) / 158)
-exe 'vert 2resize ' . ((&columns * 43 + 79) / 158)
+exe 'vert 1resize ' . ((&columns * 118 + 79) / 158)
+exe 'vert 2resize ' . ((&columns * 39 + 79) / 158)
 argglobal
 balt src/assets/Icons.tsx
 setlocal fdm=manual
@@ -95,16 +95,17 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 153 - ((27 * winheight(0) + 19) / 38)
+let s:l = 114 - ((18 * winheight(0) + 19) / 38)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 153
-normal! 09|
+keepjumps 114
+normal! 0
 lcd ~/Dev/projects/note4keep/frontend
 wincmd w
-exe 'vert 1resize ' . ((&columns * 114 + 79) / 158)
-exe 'vert 2resize ' . ((&columns * 43 + 79) / 158)
+2wincmd w
+exe 'vert 1resize ' . ((&columns * 118 + 79) / 158)
+exe 'vert 2resize ' . ((&columns * 39 + 79) / 158)
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf

@@ -39,6 +39,7 @@ export default function SpecificNote() {
   const [postState, setPostState] = useState<noteData>(noteDataDefault);
   const [undoClass, setUndoClass] = useState("specific-note__util-bar__buttons__undo");
   const [isLoading, setIsLoading] = useState(false);
+  const [reRender, setReRender] = useState(0);
 
 
   useEffect(() => {
@@ -89,7 +90,7 @@ export default function SpecificNote() {
     } else {
       console.error("No login token");
     }
-  }, [noteId]);
+  }, [noteId, reRender]);
 
   /* useEffect(() => {
     console.log(firstState);
@@ -294,6 +295,7 @@ export default function SpecificNote() {
       }
     };
 
+
     if (!dialogTurn) {
       dispatch(turnDialog(true));
       dispatch(
@@ -307,6 +309,9 @@ export default function SpecificNote() {
     }
   };
 
+  const handleUndo = () => {
+    setReRender(reRender + 1);
+  }
 
   let form = (<></>);
   if (noteContent) {
@@ -364,7 +369,7 @@ export default function SpecificNote() {
             <CheckIcon />
             <input type="submit" id="submit-loco" form="update-form" value="" />
           </div>
-          <div className={undoClass}>
+          <div className={undoClass} onClick={handleUndo}>
             <UndoIcon />
           </div>
           <div
