@@ -241,6 +241,7 @@ export default function SpecificNote() {
 
         if (response.ok) {
           dispatch(refreshLog(response.statusText));
+          setReRender(reRender + 1);
           window.scrollTo(0, 0);
         } else {
           console.error(resParsed.error);
@@ -322,7 +323,8 @@ export default function SpecificNote() {
             <b>ID:</b> {noteContent.note_id}
           </em>
         </div>
-        <form className="specific-note__box__content__form" id="update-form" onSubmit={handleUpdate}
+        <form className="specific-note__box__content__form" id="update-form"
+          onSubmit={handleUpdate}
           onInput={handleFormChange}>
           <div>
             <input
