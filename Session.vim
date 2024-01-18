@@ -13,13 +13,13 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +320 src/routes/SpecificNote.tsx
-badd +153 src/scss/SpecificNote.scss
+badd +51 src/routes/SpecificNote.tsx
+badd +114 src/scss/SpecificNote.scss
 badd +19 src/routes/Notes.tsx
 badd +1 src/scss/Login.scss
 badd +45 src/routes/Login.tsx
 badd +26 src/scss/AuthInterface.scss
-badd +258 src/assets/Icons.tsx
+badd +1 src/assets/Icons.tsx
 badd +1 src/scss/App.scss
 badd +34 src/components/NavBar.tsx
 badd +1 src/hooks/useAuth.tsx
@@ -28,19 +28,19 @@ badd +1 src/scss/Loading.scss
 badd +50 src/routes/Register.tsx
 badd +3 src/scss/NotePreview.scss
 badd +1 src/components/NotePageNav.tsx
-badd +25 src/components/NotePreview.tsx
+badd +1 src/components/NotePreview.tsx
 badd +3 src/scss/Notes.scss
 badd +84 src/routes/SearchNotes.tsx
 badd +1 src/scss/SearchNotes.scss
 badd +33 src/App.tsx
-badd +141 src/routes/Home.tsx
+badd +104 src/routes/Home.tsx
 badd +22 src/store/userInfo.ts
 badd +52 src/scss/Home.scss
 badd +5 src/components/Footer.tsx
 badd +2 src/scss/Footer.scss
 argglobal
 %argdel
-edit src/routes/SpecificNote.tsx
+edit src/routes/Home.tsx
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
@@ -60,7 +60,7 @@ set winwidth=1
 exe 'vert 1resize ' . ((&columns * 118 + 79) / 158)
 exe 'vert 2resize ' . ((&columns * 39 + 79) / 158)
 argglobal
-balt src/assets/Icons.tsx
+balt src/routes/SpecificNote.tsx
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -71,12 +71,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 320 - ((8 * winheight(0) + 19) / 38)
+let s:l = 1 - ((0 * winheight(0) + 19) / 38)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 320
-normal! 055|
+keepjumps 1
+normal! 010|
 lcd ~/Dev/projects/note4keep/frontend
 wincmd w
 argglobal
@@ -103,7 +103,6 @@ keepjumps 114
 normal! 0
 lcd ~/Dev/projects/note4keep/frontend
 wincmd w
-2wincmd w
 exe 'vert 1resize ' . ((&columns * 118 + 79) / 158)
 exe 'vert 2resize ' . ((&columns * 39 + 79) / 158)
 tabnext 1

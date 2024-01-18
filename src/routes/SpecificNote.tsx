@@ -16,16 +16,16 @@ import Loading from "../components/Loading";
 const URL = `${URLbackend}/api/notes/spec-note`;
 
 interface noteData {
-  title: string,
-  priority: number,
-  text: string,
+  title: string;
+  priority: number;
+  text: string;
 }
 
 const noteDataDefault = {
   title: "",
   priority: 0,
   text: "",
-}
+};
 
 export default function SpecificNote() {
   const dispatch = useDispatch();
@@ -33,14 +33,15 @@ export default function SpecificNote() {
   const dialogTurn = useAppSelector((state) => state.dialogDisplay.turn);
   const { noteId } = useParams();
   const [noteContent, setNoteContent] = useState<Note>();
-  const [optionsList, setOptionsList] = useState([<></>]);
+  const [optionsList, setOptionsList] = useState<JSX.Element[]>([]);
   const navigate = useNavigate();
   const [firstState, setFirstState] = useState<noteData>(noteDataDefault);
   const [postState, setPostState] = useState<noteData>(noteDataDefault);
-  const [undoClass, setUndoClass] = useState("specific-note__util-bar__buttons__undo");
+  const [undoClass, setUndoClass] = useState(
+    "specific-note__util-bar__buttons__undo",
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [reRender, setReRender] = useState(0);
-
 
   useEffect(() => {
     const authRaw = window.localStorage.getItem("SESSION_ID");
@@ -71,12 +72,12 @@ export default function SpecificNote() {
               title: res.title,
               priority: res.priority,
               text: res.text,
-            })
+            });
             setPostState({
               title: res.title,
               priority: res.priority,
               text: res.text,
-            })
+            });
             setIsLoading(false);
           } else {
             setIsLoading(false);
@@ -92,10 +93,6 @@ export default function SpecificNote() {
     }
   }, [noteId, reRender]);
 
-  /* useEffect(() => {
-    console.log(firstState);
-  }, [firstState]) */
-
   useEffect(() => {
     const individualOptionList = [];
 
@@ -105,7 +102,7 @@ export default function SpecificNote() {
           individualOptionList.push(
             <option key={i} value={2}>
               {2} {"(Default)"}
-            </option>
+            </option>,
           );
         } else if (i && i === noteContent.priority) {
           const x = noteContent.priority;
@@ -114,13 +111,13 @@ export default function SpecificNote() {
             <option key={i} value={x} selected>
               {x}
               {noteContent.priority === 2 ? " (Default)" : ""}
-            </option>
+            </option>,
           );
         } else {
           individualOptionList.push(
             <option key={i} value={i}>
               {i}
-            </option>
+            </option>,
           );
         }
       }
@@ -139,10 +136,9 @@ export default function SpecificNote() {
     }
 
     console.log(undoClass);
-  }, [postState, firstState, undoClass])
+  }, [postState, firstState, undoClass]);
 
   const handleFormChange = (event: React.ChangeEvent<HTMLFormElement>) => {
-
     console.log(`Estado de postState anterior: ${JSON.stringify(postState)}`);
     let res = {
       title: "",
@@ -189,7 +185,7 @@ export default function SpecificNote() {
     }
 
     setPostState(res);
-  }
+  };
 
   const handleUpdate = async (event: FormEvent) => {
     event.preventDefault();
@@ -199,12 +195,12 @@ export default function SpecificNote() {
     const title = form.title.value;
 
     const priorityString = form.priority.value;
-    let priority: number = 0;
+    let priority = 0;
 
     try {
       priority = parseInt(priorityString);
     } catch (e) {
-      console.error("Error" + e);
+      console.error(`Error: ${e}`);
       priority = 2;
     }
 
@@ -296,7 +292,6 @@ export default function SpecificNote() {
       }
     };
 
-
     if (!dialogTurn) {
       dispatch(turnDialog(true));
       dispatch(
@@ -304,17 +299,17 @@ export default function SpecificNote() {
           <ConfirmDialog
             question="Are you sure about deleting this note?"
             action={deleteNote}
-          />
-        )
+          />,
+        ),
       );
     }
   };
 
   const handleUndo = () => {
     setReRender(reRender + 1);
-  }
+  };
 
-  let form = (<></>);
+  let form = <></>;
   if (noteContent) {
     form = (
       <div className="specific-note__box__content">
@@ -323,9 +318,12 @@ export default function SpecificNote() {
             <b>ID:</b> {noteContent.note_id}
           </em>
         </div>
-        <form className="specific-note__box__content__form" id="update-form"
+        <form
+          className="specific-note__box__content__form"
+          id="update-form"
           onSubmit={handleUpdate}
-          onInput={handleFormChange}>
+          onInput={handleFormChange}
+        >
           <div>
             <input
               type="text"
@@ -342,21 +340,18 @@ export default function SpecificNote() {
             </select>
           </div>
           <pre>
-            <textarea
-              name="text"
-              required
-              defaultValue={noteContent.text}
-            ></textarea>
+            <textarea name="text" required defaultValue={noteContent.text} />
           </pre>
         </form>
       </div>
     );
   } else {
-    form = (<>
-      <span>The note has no content.</span>
-    </>)
+    form = (
+      <>
+        <span>The note has no content.</span>
+      </>
+    );
   }
-
 
   return (
     <div className="specific-note">
@@ -371,12 +366,13 @@ export default function SpecificNote() {
             <CheckIcon />
             <input type="submit" id="submit-loco" form="update-form" value="" />
           </div>
-          <div className={undoClass} onClick={handleUndo}>
+          <div className={undoClass} onClick={handleUndo} onKeyUp={handleUndo}>
             <UndoIcon />
           </div>
           <div
             className="specific-note__util-bar__buttons__delete"
             onClick={handleDelete}
+            onKeyUp={handleUndo}
           >
             <DeleteIcon />
           </div>
