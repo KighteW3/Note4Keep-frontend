@@ -143,11 +143,12 @@ main {
   flex-direction: column;
 }
 .specific-note__box__content__bar {
-  height: 8%;
+  height: auto;
   min-height: 50px;
   display: flex;
   align-items: center;
   justify-content: space-around;
+  flex-wrap: wrap;
   background-color: rgba(0, 0, 0, 0.2666666667);
 }
 .specific-note__box__content__bar__id {
@@ -159,7 +160,7 @@ main {
 .specific-note__box__content__form {
   display: flex;
   min-height: min-content;
-  height: 90%;
+  height: auto;
   justify-content: center;
   align-items: center;
   flex-direction: column;

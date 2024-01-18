@@ -132,11 +132,12 @@ $buttonWidth: 35px;
     flex-direction: column;
 
     &__bar {
-      height: 8%;
+      height: auto;
       min-height: 50px;
       display: flex;
       align-items: center;
       justify-content: space-around;
+      flex-wrap: wrap;
       background-color: #0004;
 
       &__id {
@@ -151,7 +152,7 @@ $buttonWidth: 35px;
     &__form {
       display: flex;
       min-height: min-content;
-      height: 90%;
+      height: auto;
       justify-content: center;
       align-items: center;
       flex-direction: column;
