@@ -81,6 +81,7 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
+  color: black;
 }
 .note-preview__id-priority__priority p {
   margin: 0;
