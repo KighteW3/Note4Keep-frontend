@@ -68,14 +68,15 @@ export default function SearchNotes() {
       window.location.pathname === "/notes/search/" ||
       !searchQuery
     ) {
-      navigate(`../notes/`, { replace: true });
+      navigate("../notes/", { replace: true });
     }
   }, [searchQuery, navigate, refresh]);
 
   useEffect(() => {
-    const numOfPages = notesList && notesList.length > 0
-      ? Math.ceil(notesList.length / 28)
-      : null;
+    const numOfPages =
+      notesList && notesList.length > 0
+        ? Math.ceil(notesList.length / 28)
+        : null;
 
     const notesPages = [];
 
@@ -122,21 +123,23 @@ export default function SearchNotes() {
     <div className="search-notes">
       <div className="search-notes__content">
         <div className="search-notes__content__container">
-          {isLoading ? <Loading isLoading={isLoading} /> : notesList && notePageOrd[numPageToUse]
-            ? (
-              notePageOrd[numPageToUse].map((result) => {
-                return (
-                  <NotePreview
-                    note_id={result.note_id}
-                    title={result.title}
-                    priority={result.priority}
-                    text={result.text}
-                    redirect={result.note_id}
-                  />
-                );
-              })
-            )
-            : <>No results...</>}
+          {isLoading ? (
+            <Loading isLoading={isLoading} />
+          ) : notesList && notePageOrd[numPageToUse] ? (
+            notePageOrd[numPageToUse].map((result) => {
+              return (
+                <NotePreview
+                  note_id={result.note_id}
+                  title={result.title}
+                  priority={result.priority}
+                  text={result.text}
+                  redirect={result.note_id}
+                />
+              );
+            })
+          ) : (
+            <>No results...</>
+          )}
         </div>
         <NotePageNav
           numPageInt={numPageToUse}

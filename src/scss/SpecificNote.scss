@@ -116,13 +116,14 @@ $buttonWidth: 35px;
   width: 70%;
   min-width: fit-content;
   max-width: 2000px;
-  height: 400px;
+  height: auto;
   border: 2px solid #444;
   margin: 50px;
   box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
 
   &__content {
     width: 100%;
@@ -130,13 +131,19 @@ $buttonWidth: 35px;
     display: flex;
     flex-direction: column;
 
-    &__id {
-      height: 10%;
-      min-height: 70px;
+    &__bar {
+      height: 8%;
+      min-height: 50px;
       display: flex;
       align-items: center;
+      justify-content: space-around;
+      background-color: #0004;
 
-      em {
+      &__id {
+        padding: 5px 15px;
+      }
+
+      &__date {
         padding: 5px 15px;
       }
     }
@@ -149,9 +156,58 @@ $buttonWidth: 35px;
       align-items: center;
       flex-direction: column;
 
-      div {
+      &__content {
         display: flex;
-        gap: 10px;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 40%;
+        min-width: 200px;
+        max-width: 1100px;
+
+        @media only screen and (max-width: 720px) {
+          width: 70%;
+        }
+
+        div {
+          width: 100%;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
+          border-radius: App.$border-radius;
+          margin: 20px 20px;
+          gap: 10px;
+
+          input {
+            width: 60%;
+            min-width: 40px;
+            border-radius: inherit;
+            box-sizing: border-box;
+            padding: 10px;
+          }
+
+          select {
+            width: auto;
+            min-width: 30px;
+            border-radius: inherit;
+            padding: 10px;
+          }
+        }
+
+        pre {
+          width: 100%;
+          border-radius: App.$border-radius;
+
+          textarea {
+            box-sizing: border-box;
+            width: 100%;
+            min-height: 100px;
+            max-width: 150%;
+            height: 200px;
+            padding: 10px;
+            border-radius: inherit;
+          }
+        }
       }
     }
   }

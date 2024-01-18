@@ -127,13 +127,14 @@ main {
   width: 70%;
   min-width: fit-content;
   max-width: 2000px;
-  height: 400px;
+  height: auto;
   border: 2px solid #444;
   margin: 50px;
   box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
 }
 .specific-note__box__content {
   width: 100%;
@@ -141,13 +142,18 @@ main {
   display: flex;
   flex-direction: column;
 }
-.specific-note__box__content__id {
-  height: 10%;
-  min-height: 70px;
+.specific-note__box__content__bar {
+  height: 8%;
+  min-height: 50px;
   display: flex;
   align-items: center;
+  justify-content: space-around;
+  background-color: rgba(0, 0, 0, 0.2666666667);
 }
-.specific-note__box__content__id em {
+.specific-note__box__content__bar__id {
+  padding: 5px 15px;
+}
+.specific-note__box__content__bar__date {
   padding: 5px 15px;
 }
 .specific-note__box__content__form {
@@ -158,9 +164,54 @@ main {
   align-items: center;
   flex-direction: column;
 }
-.specific-note__box__content__form div {
+.specific-note__box__content__form__content {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 40%;
+  min-width: 200px;
+  max-width: 1100px;
+}
+@media only screen and (max-width: 720px) {
+  .specific-note__box__content__form__content {
+    width: 70%;
+  }
+}
+.specific-note__box__content__form__content div {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  border-radius: 10px;
+  margin: 20px 20px;
   gap: 10px;
+}
+.specific-note__box__content__form__content div input {
+  width: 60%;
+  min-width: 40px;
+  border-radius: inherit;
+  box-sizing: border-box;
+  padding: 10px;
+}
+.specific-note__box__content__form__content div select {
+  width: auto;
+  min-width: 30px;
+  border-radius: inherit;
+  padding: 10px;
+}
+.specific-note__box__content__form__content pre {
+  width: 100%;
+  border-radius: 10px;
+}
+.specific-note__box__content__form__content pre textarea {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 100px;
+  max-width: 150%;
+  height: 200px;
+  padding: 10px;
+  border-radius: inherit;
 }
 
 /*# sourceMappingURL=SpecificNote.css.map */

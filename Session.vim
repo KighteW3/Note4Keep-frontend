@@ -13,9 +13,9 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +51 src/routes/SpecificNote.tsx
-badd +114 src/scss/SpecificNote.scss
-badd +19 src/routes/Notes.tsx
+badd +151 src/routes/SpecificNote.tsx
+badd +149 src/scss/SpecificNote.scss
+badd +136 src/routes/Notes.tsx
 badd +1 src/scss/Login.scss
 badd +45 src/routes/Login.tsx
 badd +26 src/scss/AuthInterface.scss
@@ -30,17 +30,17 @@ badd +3 src/scss/NotePreview.scss
 badd +1 src/components/NotePageNav.tsx
 badd +1 src/components/NotePreview.tsx
 badd +3 src/scss/Notes.scss
-badd +84 src/routes/SearchNotes.tsx
+badd +117 src/routes/SearchNotes.tsx
 badd +1 src/scss/SearchNotes.scss
 badd +33 src/App.tsx
-badd +104 src/routes/Home.tsx
+badd +1 src/routes/Home.tsx
 badd +22 src/store/userInfo.ts
 badd +52 src/scss/Home.scss
 badd +5 src/components/Footer.tsx
 badd +2 src/scss/Footer.scss
 argglobal
 %argdel
-edit src/routes/Home.tsx
+edit src/routes/SpecificNote.tsx
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
@@ -57,10 +57,10 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe 'vert 1resize ' . ((&columns * 118 + 79) / 158)
-exe 'vert 2resize ' . ((&columns * 39 + 79) / 158)
+exe 'vert 1resize ' . ((&columns * 113 + 79) / 158)
+exe 'vert 2resize ' . ((&columns * 44 + 79) / 158)
 argglobal
-balt src/routes/SpecificNote.tsx
+balt src/routes/Notes.tsx
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -71,12 +71,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 1 - ((0 * winheight(0) + 19) / 38)
+let s:l = 360 - ((18 * winheight(0) + 19) / 38)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 1
-normal! 010|
+keepjumps 360
+normal! 09|
 lcd ~/Dev/projects/note4keep/frontend
 wincmd w
 argglobal
@@ -84,7 +84,7 @@ if bufexists(fnamemodify("~/Dev/projects/note4keep/frontend/src/scss/SpecificNot
 if &buftype ==# 'terminal'
   silent file ~/Dev/projects/note4keep/frontend/src/scss/SpecificNote.scss
 endif
-balt ~/Dev/projects/note4keep/frontend/src/scss/NotePreview.scss
+balt ~/Dev/projects/note4keep/frontend/src/routes/SpecificNote.tsx
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -95,16 +95,16 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 114 - ((18 * winheight(0) + 19) / 38)
+let s:l = 153 - ((32 * winheight(0) + 19) / 38)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 114
-normal! 0
+keepjumps 153
+normal! 012|
 lcd ~/Dev/projects/note4keep/frontend
 wincmd w
-exe 'vert 1resize ' . ((&columns * 118 + 79) / 158)
-exe 'vert 2resize ' . ((&columns * 39 + 79) / 158)
+exe 'vert 1resize ' . ((&columns * 113 + 79) / 158)
+exe 'vert 2resize ' . ((&columns * 44 + 79) / 158)
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf

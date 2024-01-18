@@ -19,13 +19,30 @@ interface noteData {
   title: string;
   priority: number;
   text: string;
+  date: Date;
 }
 
 const noteDataDefault = {
   title: "",
   priority: 0,
   text: "",
+  date: new Date(),
 };
+
+const monthNames = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 
 export default function SpecificNote() {
   const dispatch = useDispatch();
@@ -72,11 +89,13 @@ export default function SpecificNote() {
               title: res.title,
               priority: res.priority,
               text: res.text,
+              date: res.date,
             });
             setPostState({
               title: res.title,
               priority: res.priority,
               text: res.text,
+              date: res.date,
             });
             setIsLoading(false);
           } else {
@@ -144,6 +163,7 @@ export default function SpecificNote() {
       title: "",
       priority: 0,
       text: "",
+      date: new Date(),
     };
 
     let prio = 0;
@@ -154,6 +174,7 @@ export default function SpecificNote() {
           title: event.target.value,
           priority: postState.priority,
           text: postState.text,
+          date: postState.date,
         };
         break;
       case "priority":
@@ -166,6 +187,7 @@ export default function SpecificNote() {
           title: postState.title,
           priority: prio,
           text: postState.text,
+          date: postState.date,
         };
         break;
       case "text":
@@ -173,6 +195,7 @@ export default function SpecificNote() {
           title: postState.title,
           priority: postState.priority,
           text: event.target.value,
+          date: postState.date,
         };
         break;
       default:
@@ -180,6 +203,7 @@ export default function SpecificNote() {
           title: postState.title,
           priority: postState.priority,
           text: postState.text,
+          date: postState.date,
         };
         console.error("Error, invalid form element name");
     }
@@ -311,12 +335,26 @@ export default function SpecificNote() {
 
   let form = <></>;
   if (noteContent) {
+    let noteDate = new Date();
+    try {
+      noteDate = new Date(noteContent.date);
+    } catch (e) {
+      console.error("Error trying to parse data field from note", e);
+    }
+
     form = (
       <div className="specific-note__box__content">
-        <div className="specific-note__box__content__id">
-          <em>
+        <div className="specific-note__box__content__bar">
+          <em className="specific-note__box__content__bar__id">
             <b>ID:</b> {noteContent.note_id}
           </em>
+          <div className="specific-note__box__content__bar__date">
+            <b>Date:</b>
+            {` ${noteDate.getDay()} ${monthNames[noteDate.getMonth()].substring(
+              0,
+              3,
+            )} ${noteDate.getFullYear()}`}
+          </div>
         </div>
         <form
           className="specific-note__box__content__form"
@@ -324,24 +362,26 @@ export default function SpecificNote() {
           onSubmit={handleUpdate}
           onInput={handleFormChange}
         >
-          <div>
-            <input
-              type="text"
-              placeholder="Insert the note title"
-              defaultValue={noteContent.title}
-              name="title"
-              id="pito"
-              required
-            />
-            <select name="priority">
-              {optionsList.map((result) => {
-                return result;
-              })}
-            </select>
+          <div className="specific-note__box__content__form__content">
+            <div>
+              <input
+                type="text"
+                placeholder="Insert the note title"
+                defaultValue={noteContent.title}
+                name="title"
+                id="pito"
+                required
+              />
+              <select name="priority">
+                {optionsList.map((result) => {
+                  return result;
+                })}
+              </select>
+            </div>
+            <pre>
+              <textarea name="text" required defaultValue={noteContent.text} />
+            </pre>
           </div>
-          <pre>
-            <textarea name="text" required defaultValue={noteContent.text} />
-          </pre>
         </form>
       </div>
     );
