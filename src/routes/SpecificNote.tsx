@@ -369,7 +369,6 @@ export default function SpecificNote() {
                 placeholder="Insert the note title"
                 defaultValue={noteContent.title}
                 name="title"
-                id="pito"
                 required
               />
               <select name="priority">
