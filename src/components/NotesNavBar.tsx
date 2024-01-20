@@ -31,7 +31,7 @@ export default function NotesNavBar() {
     console.log(searchQuery);
 
     dispatch(refreshCount(refresh + 1));
-    if (searchQuery == "" || !searchQuery) {
+    if (searchQuery === "" || !searchQuery) {
       navigate("../notes/", { replace: true });
     } else {
       navigate(`../notes/search/${searchQuery}`, { replace: true });
@@ -103,7 +103,7 @@ export default function NotesNavBar() {
             placeholder="Search for your notes here..."
             name="search"
           />
-          <button>
+          <button type="button">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -125,22 +125,26 @@ export default function NotesNavBar() {
 
         <div className="notes-nav__bar__buttons">
           <div className="notes-nav__bar__buttons__button notes-nav__bar__buttons__refresh">
-            <button onClick={handleRefresh}>
+            <button
+              type="button"
+              onClick={handleRefresh}
+              onKeyUp={handleRefresh}
+            >
               <RefreshIcon />
             </button>
           </div>
           <div className="notes-nav__bar__buttons__button notes-nav__bar__buttons__delete">
-            <button onClick={handleDelete}>
+            <button type="button" onClick={handleDelete} onKeyUp={handleDelete}>
               <DeleteIcon />
             </button>
           </div>
           <div className="notes-nav__bar__buttons__button notes-nav__bar__buttons__filters">
-            <button>
+            <button type="button">
               <FiltersIcon />
             </button>
           </div>
           <div className="notes-nav__bar__buttons__button notes-nav__bar__buttons__write">
-            <button onClick={WriteNote}>
+            <button type="button" onClick={WriteNote} onKeyUp={WriteNote}>
               <CreateNoteIcon />
             </button>
           </div>

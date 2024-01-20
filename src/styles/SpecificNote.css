@@ -92,15 +92,12 @@ main {
   align-items: center;
   padding: 0;
 }
-.specific-note__util-bar__buttons div:hover {
-  cursor: pointer;
-}
 .specific-note__util-bar__buttons div svg {
   height: 70%;
   width: 70%;
 }
 .specific-note__util-bar__buttons__update {
-  background-color: lightgreen;
+  background-color: gray;
   position: relative;
 }
 .specific-note__util-bar__buttons__update input {
@@ -110,8 +107,19 @@ main {
   display: hidden;
   opacity: 0;
 }
-.specific-note__util-bar__buttons__update input:hover {
-  cursor: inherit;
+.specific-note__util-bar__buttons__update-active {
+  background-color: lightgreen;
+  position: relative;
+}
+.specific-note__util-bar__buttons__update-active input {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: hidden;
+  opacity: 0;
+}
+.specific-note__util-bar__buttons__update-active input:hover {
+  cursor: pointer;
 }
 .specific-note__util-bar__buttons__undo {
   background-color: gray;
@@ -119,8 +127,14 @@ main {
 .specific-note__util-bar__buttons__undo-active {
   background-color: yellow;
 }
+.specific-note__util-bar__buttons__undo-active:hover {
+  cursor: pointer;
+}
 .specific-note__util-bar__buttons__delete {
   background-color: red;
+}
+.specific-note__util-bar__buttons__delete:hover {
+  cursor: pointer;
 }
 
 .specific-note__box {

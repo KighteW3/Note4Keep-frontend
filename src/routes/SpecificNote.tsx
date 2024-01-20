@@ -57,6 +57,9 @@ export default function SpecificNote() {
   const [undoClass, setUndoClass] = useState(
     "specific-note__util-bar__buttons__undo",
   );
+  const [updateClass, setUpdateClass] = useState(
+    "specific-note__util-bar__buttons__update",
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [reRender, setReRender] = useState(0);
 
@@ -148,14 +151,16 @@ export default function SpecificNote() {
   useEffect(() => {
     if (JSON.stringify(postState) !== JSON.stringify(firstState)) {
       setUndoClass("specific-note__util-bar__buttons__undo-active");
+      setUpdateClass("specific-note__util-bar__buttons__update-active");
     } else {
-      if (undoClass.endsWith("active")) {
+      if (undoClass.endsWith("active") || updateClass.endsWith("active")) {
         setUndoClass("specific-note__util-bar__buttons__undo");
+        setUpdateClass("specific-note__util-bar__buttons__update");
       }
     }
 
     console.log(undoClass);
-  }, [postState, firstState, undoClass]);
+  }, [postState, firstState, undoClass, updateClass]);
 
   const handleFormChange = (event: React.ChangeEvent<HTMLFormElement>) => {
     console.log(`Estado de postState anterior: ${JSON.stringify(postState)}`);
@@ -401,11 +406,20 @@ export default function SpecificNote() {
           </NavLink>
         </div>
         <div className="specific-note__util-bar__buttons">
-          <div className="specific-note__util-bar__buttons__update">
+          <div className={updateClass}>
             <CheckIcon />
-            <input type="submit" id="submit-loco" form="update-form" value="" />
+            <input
+              type="submit"
+              id="submit-loco"
+              form={updateClass.endsWith("active") ? "update-form" : ""}
+              value=""
+            />
           </div>
-          <div className={undoClass} onClick={handleUndo} onKeyUp={handleUndo}>
+          <div
+            className={undoClass}
+            onClick={undoClass.endsWith("active") ? handleUndo : () => { }}
+            onKeyUp={handleUndo}
+          >
             <UndoIcon />
           </div>
           <div

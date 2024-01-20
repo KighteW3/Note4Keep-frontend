@@ -62,11 +62,6 @@ $buttonWidth: 35px;
 
       border-radius: 8px;
 
-
-      &:hover {
-        cursor: pointer;
-      }
-
       outline: none;
       border: none;
       display: flex;
@@ -82,19 +77,32 @@ $buttonWidth: 35px;
     }
 
     &__update {
-      background-color: lightgreen;
+      background-color: gray;
       position: relative;
 
       input {
-        &:hover {
-          cursor: inherit
-        }
-
         position: absolute;
         width: 100%;
         height: 100%;
         display: hidden;
         opacity: 0;
+      }
+
+      &-active {
+        background-color: lightgreen;
+        position: relative;
+
+        input {
+          &:hover {
+            cursor: pointer
+          }
+
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          display: hidden;
+          opacity: 0;
+        }
       }
     }
 
@@ -102,12 +110,20 @@ $buttonWidth: 35px;
       background-color: gray;
 
       &-active {
-        background-color: yellow
+        background-color: yellow;
+
+        &:hover {
+          cursor: pointer;
+        }
       }
     }
 
     &__delete {
       background-color: red;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 }
