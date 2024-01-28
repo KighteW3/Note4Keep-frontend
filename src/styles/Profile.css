@@ -1,0 +1,82 @@
+body {
+  background-color: #666;
+}
+
+main {
+  width: 100%;
+  height: 100%;
+}
+
+.modal-display {
+  width: 100%;
+  height: 100dvh;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1900;
+  background-color: rgba(0, 0, 0, 0.6666666667);
+}
+.modal-display__box {
+  width: 90%;
+  height: auto;
+  z-index: 2000;
+}
+
+@keyframes dialogTransition {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.profile {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.profile__box {
+  width: auto;
+  height: auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto auto;
+  background-color: #600;
+}
+.profile__box__info {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-grow: 1;
+  gap: 30px;
+  padding: 30px;
+}
+.profile__box__info__picture {
+  width: 90px;
+  height: 90px;
+  display: flex;
+}
+.profile__box__info__picture img {
+  width: 100%;
+  height: 100%;
+}
+.profile__box__info__text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.profile__box__options, .profile__box__logout {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 30px;
+}
+
+/*# sourceMappingURL=Profile.css.map */

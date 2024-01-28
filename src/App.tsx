@@ -16,55 +16,57 @@ import Profile from "./routes/Profile";
 import Footer from "./components/Footer";
 
 interface resultInfo {
-  ok: boolean;
-  userInfo: {
-    username: string;
-    email: string;
-  };
+	ok: boolean;
+	userInfo: {
+		username: string;
+		email: string;
+	};
 }
 
 export default function App() {
-  const refresh = useAppSelector((state) => state.refreshNotes.refresh);
-  const dialogTurn = useAppSelector((state) => state.dialogDisplay.turn);
-  const dialogContent = useAppSelector((state) => state.dialogDisplay.content);
-  const dispatch = useAppDispatch();
-  const authData: resultInfo = useAuth();
+	const refresh = useAppSelector((state) => state.refreshNotes.refresh);
+	const dialogTurn = useAppSelector((state) => state.dialogDisplay.turn);
+	const dialogContent = useAppSelector((state) => state.dialogDisplay.content);
+	const dispatch = useAppDispatch();
+	const authData: resultInfo = useAuth();
 
-  useEffect(() => {
-    dispatch(updateLoginInfo(authData));
-  }, [dispatch, authData]);
+	useEffect(() => {
+		dispatch(updateLoginInfo(authData));
+	}, [dispatch, authData]);
 
-  useEffect(() => {
-    dispatch(turnDialog(false));
-    dispatch(dialogToShow(<></>));
-  }, [refresh, dispatch]);
+	useEffect(() => {
+		dispatch(turnDialog(false));
+		dispatch(dialogToShow(<div>Empty dialog</div>));
+	}, [refresh, dispatch]);
 
-  return (
-    <main>
-      <div
-        className="modal-display"
-        style={{ display: dialogTurn ? "flex" : "none" }}
-      >
-        <div className="modal-display__box">{dialogContent || <></>}</div>
-      </div>
-      <NavBar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="notes" element={<Notes />}>
-          <Route path="search/:searchQuery" element={<SearchNotes />} />
-          <Route
-            path="search/:numPage/:searchQuery"
-            element={<SearchNotes />}
-          />
-        </Route>
-        <Route path="notes/:numPage" element={<Notes />} />
-        <Route path="notes/id/:noteId" element={<SpecificNote />} />
-        <Route path="users/login" element={<Login />} />
-        <Route path="users/register" element={<Register />} />
-        <Route path="profile" element={<Profile />} />
-        <Route path="*" element={<>Not found</>} />
-      </Routes>
-      <Footer />
-    </main>
-  );
+	return (
+		<main>
+			<div
+				className="modal-display"
+				style={{ display: dialogTurn ? "flex" : "none" }}
+			>
+				<div className="modal-display__box">
+					{dialogContent || <div>No dialog to show.</div>}
+				</div>
+			</div>
+			<NavBar />
+			<Routes>
+				<Route path="/" element={<Home />} />
+				<Route path="notes" element={<Notes />}>
+					<Route path="search/:searchQuery" element={<SearchNotes />} />
+					<Route
+						path="search/:numPage/:searchQuery"
+						element={<SearchNotes />}
+					/>
+				</Route>
+				<Route path="notes/:numPage" element={<Notes />} />
+				<Route path="notes/id/:noteId" element={<SpecificNote />} />
+				<Route path="users/login" element={<Login />} />
+				<Route path="users/register" element={<Register />} />
+				<Route path="profile" element={<Profile />} />
+				<Route path="*" element={<div>Not found</div>} />
+			</Routes>
+			<Footer />
+		</main>
+	);
 }

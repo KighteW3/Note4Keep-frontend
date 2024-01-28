@@ -64,6 +64,8 @@ export default function SpecificNote() {
   const [reRender, setReRender] = useState(0);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+
     const authRaw = window.localStorage.getItem("SESSION_ID");
 
     if (authRaw) {
