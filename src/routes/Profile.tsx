@@ -14,7 +14,7 @@ export default function Profile() {
 				<div className="profile__box__info">
 					<div className="profile__box__info__picture">
 						<img
-							src="https://www.startpage.com/av/proxy-image?piurl=http%3A%2F%2Fwww.iconeasy.com%2Ficon%2Fpng%2FEmoticon%2FYolks%2FXD.png&sp=1710676110T19dc2928b7fbb388cb25f7e672eafd5408ae9a29c9906b7a4f02481bfa5153e4"
+							src="/photos/default.png"
 							alt="user profile"
 						/>
 					</div>
