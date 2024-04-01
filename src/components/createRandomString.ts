@@ -16,9 +16,9 @@ export default function createRandomString(length: number, special: boolean) {
 
           randNumSize > 0
             ? (randomString = randomString.concat(
-                "",
-                characters[randNumAlph].toUpperCase()
-              ))
+              "",
+              characters[randNumAlph].toUpperCase()
+            ))
             : (randomString = randomString.concat("", characters[randNumAlph]));
         }
         break;

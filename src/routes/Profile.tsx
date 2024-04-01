@@ -8,6 +8,10 @@ export default function Profile() {
 	const username = userInfo.userInfo.username || "unknown";
 	const email = userInfo.userInfo.email || "No email provided";
 
+	/* useEffect(() => {
+		
+	}, []) */
+
 	return (
 		<div className="profile">
 			<div className="profile__box">
