@@ -186,7 +186,7 @@ export default function SpecificNote() {
         break;
       case "priority":
         try {
-          prio = parseInt(event.target.value);
+          prio = Number.parseInt(event.target.value);
         } catch (e) {
           console.error("Cannot parse priority input", e);
         }

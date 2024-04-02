@@ -38,11 +38,12 @@ badd +22 src/store/userInfo.ts
 badd +52 src/scss/Home.scss
 badd +5 src/components/Footer.tsx
 badd +2 src/scss/Footer.scss
-badd +21 src/routes/Profile.tsx
+badd +28 src/routes/Profile.tsx
 badd +41 src/scss/Profile.scss
+badd +1 src/components/userOptions.ts
 argglobal
 %argdel
-edit src/routes/Profile.tsx
+edit src/components/userOptions.ts
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
@@ -62,6 +63,7 @@ set winwidth=1
 exe 'vert 1resize ' . ((&columns * 113 + 79) / 158)
 exe 'vert 2resize ' . ((&columns * 44 + 79) / 158)
 argglobal
+balt src/routes/Profile.tsx
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -72,12 +74,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 28 - ((26 * winheight(0) + 19) / 38)
+let s:l = 1 - ((0 * winheight(0) + 19) / 38)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 28
-normal! 044|
+keepjumps 1
+normal! 0
 lcd ~/Dev/projects/note4keep/frontend
 wincmd w
 argglobal
@@ -85,6 +87,7 @@ if bufexists(fnamemodify("~/Dev/projects/note4keep/frontend/src/scss/Profile.scs
 if &buftype ==# 'terminal'
   silent file ~/Dev/projects/note4keep/frontend/src/scss/Profile.scss
 endif
+balt ~/Dev/projects/note4keep/frontend/src/routes/Profile.tsx
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
