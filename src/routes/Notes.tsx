@@ -119,7 +119,7 @@ export default function Notes() {
 	}, [notesList, refresh]);
 
 	useEffect(() => {
-		const a = numPage ? parseInt(numPage) - 1 : 0;
+		const a = numPage ? Number.parseInt(numPage) - 1 : 0;
 		setNumPageToUse(a);
 
 		setIsRoot(

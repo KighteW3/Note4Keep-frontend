@@ -55,7 +55,20 @@ export default function Profile() {
 				<div className="profile__box__options">
 					<div className="profile__box__options__box">
 						<form>Options unavailable for now...</form>
-						{`${userOptions.picture}`}
+						<div id="userOptions">
+							<span>They'll look somthing like this:</span>
+							<span>Filter by: {userOptions.filter_by}</span>
+							<span>Order by: {userOptions.filter_order}</span>
+							<span>Picture: {userOptions.picture}</span>
+							<span>Theme: {userOptions.theme}</span>
+						</div>
+
+						{/* This may be useful in the future */}
+						{/* [...Array(5)].map((num: number) => {
+							return (
+								<span>{num}</span>
+							)
+						}) */}
 					</div>
 				</div>
 				<div className="profile__box__logout">

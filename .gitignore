@@ -12,6 +12,7 @@ dist
 dist-ssr
 *.local
 .env
+Session.vim
 
 # Editor directories and files
 .vscode/*

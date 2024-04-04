@@ -78,5 +78,9 @@ main {
   box-sizing: border-box;
   padding: 30px;
 }
+#userOptions {
+  display: flex;
+  flex-direction: column;
+}
 
 /*# sourceMappingURL=Profile.css.map */
