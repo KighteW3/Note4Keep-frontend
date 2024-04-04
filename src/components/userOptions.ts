@@ -1,7 +1,28 @@
 import { URLbackend } from "../assets/URLs";
 
+interface AuthStructure {
+  response: string,
+  token: string,
+}
 
-export default function getUserOptions(authRaw: string): Promise<object> {
+
+export interface UserOptions {
+  filter_by: string,
+  filter_order: string,
+  picture: string,
+  theme: string,
+  user: string
+}
+
+export const userOptionsTemplate: UserOptions = {
+  filter_by: "default",
+  filter_order: "default",
+  picture: "default.jpg",
+  theme: "default",
+  user: "default",
+};
+
+export default function getUserOptions(authRaw: string): Promise<UserOptions> {
   const URL = `${URLbackend}/api/users/get-user-options`;
 
   return new Promise((resolve, reject) => {
@@ -9,9 +30,9 @@ export default function getUserOptions(authRaw: string): Promise<object> {
       reject("No auth token");
     }
 
-    let token = {
-      response: "",
-      token: ""
+    let token: AuthStructure = {
+      response: "response",
+      token: "token"
     };
 
     try {
